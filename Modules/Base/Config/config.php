@@ -1,0 +1,71 @@
+<?php
+
+return [
+    'name' => 'Base',
+    'project_name' => 'White Falcon',
+    'logo_uri' => 'img/wf-logo.png',
+    'fav_uri' => 'img/favicon.png',
+
+    'stubs' => [
+        'files' => [
+            'routes/web' => 'Routes/web.php',
+            'routes/api' => 'Routes/api.php',
+            'routes/v1/public' => 'Routes/v1/public.php',
+            'routes/v1/private' => 'Routes/v1/private.php',
+            'views/index' => 'Resources/views/index.blade.php',
+            'views/master' => 'Resources/views/layouts/master.blade.php',
+            'scaffold/config' => 'Config/config.php',
+            'config/permissions' => 'Config/permissions.php',
+            'composer' => 'composer.json',
+            'assets/js/app' => 'Resources/assets/js/app.js',
+            'assets/sass/app' => 'Resources/assets/sass/app.scss',
+            'webpack' => 'webpack.mix.js',
+            'package' => 'package.json',
+        ],
+    ],
+    'paths' => [
+        'generator' => [
+            'controller' => ['path' => 'Http/Controllers', 'generate' => true],
+            'controller-proxy' => ['path' => 'Proxies/Http/Controllers', 'generate' => true],
+            'model' => ['path' => 'Entities', 'generate' => true],
+            'model-proxy' => ['path' => 'Proxies/Entities', 'generate' => true],
+            'filter' => ['path' => 'Http/Middleware', 'generate' => true],
+            'filter-proxy' => ['path' => 'Proxies/Http/Middleware', 'generate' => true],
+            'repository' => ['path' => 'Repositories', 'generate' => true],
+            'repository-proxy' => ['path' => 'Proxies/Repositories', 'generate' => true],
+
+
+            //====
+
+            'config' => ['path' => 'Config', 'generate' => true],
+            'command' => ['path' => 'Console', 'generate' => true],
+            'migration' => ['path' => 'Database/Migrations', 'generate' => true],
+            'seeder' => ['path' => 'Database/Seeders', 'generate' => true],
+            'factory' => ['path' => 'Database/factories', 'generate' => true],
+//            'model' => ['path' => 'Entities', 'generate' => true],
+//            'model-proxy' => ['path' => 'Proxies/Entities', 'generate' => true],
+            'routes' => ['path' => 'Routes/v1', 'generate' => true],
+//            'controller' => ['path' => 'Http/Controllers', 'generate' => true],
+//            'controller-proxy' => ['path' => 'Proxies/Http/Controllers', 'generate' => true],
+//            'filter' => ['path' => 'Http/Middleware', 'generate' => true],
+//            'filter-proxy' => ['path' => 'Proxies/Http/Middleware', 'generate' => true],
+            'request' => ['path' => 'Http/Requests', 'generate' => true],
+            'provider' => ['path' => 'Providers', 'generate' => true],
+            'assets' => ['path' => 'Resources/assets', 'generate' => true],
+            'lang' => ['path' => 'Resources/lang', 'generate' => true],
+            'views' => ['path' => 'Resources/views', 'generate' => true],
+            'test' => ['path' => 'Tests/Unit', 'generate' => true],
+            'test-feature' => ['path' => 'Tests/Feature', 'generate' => true],
+//            'repository' => ['path' => 'Repositories', 'generate' => true],
+//            'repository-proxy' => ['path' => 'Proxies/Repositories', 'generate' => true],
+            'event' => ['path' => 'Events', 'generate' => false],
+            'listener' => ['path' => 'Listeners', 'generate' => false],
+            'policies' => ['path' => 'Policies', 'generate' => false],
+            'rules' => ['path' => 'Rules', 'generate' => false],
+            'jobs' => ['path' => 'Jobs', 'generate' => false],
+            'emails' => ['path' => 'Emails', 'generate' => false],
+            'notifications' => ['path' => 'Notifications', 'generate' => false],
+            'resource' => ['path' => 'Transformers', 'generate' => false],
+        ],
+    ],
+];

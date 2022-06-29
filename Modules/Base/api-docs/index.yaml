@@ -1,0 +1,6047 @@
+openapi: 3.0.0
+info:
+  title: White Falcon Modules API
+  version: 1.1.0
+  description: This is set of APIs for interacting with white falcon modules.
+paths:
+  # Base module
+  /terms:
+    summary: All basic calls to main object URL
+    get:
+      summary: Get List of all terms
+      description: ''
+      operationId: termsList
+      tags:
+        - Base
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Term'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    post:
+      summary: Create New Term
+      description: ''
+      operationId: termCreate
+      tags:
+        - Base
+      requestBody:
+        $ref: '#/components/requestBodies/TermForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Term'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/terms/{term}':
+    summary: Operations related to a single term
+    parameters:
+      - in: path
+        name: term
+        schema:
+          type: string
+        required: true
+        description: Numeric ID or slug of the term to get
+    get:
+      summary: Get An individual term
+      description: ''
+      operationId: termGet
+      tags:
+        - Base
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Term'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual term
+      description: ''
+      operationId: termUpdate
+      tags:
+        - Base
+      requestBody:
+        $ref: '#/components/requestBodies/TermForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Term'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual term
+      description: ''
+      operationId: termDelete
+      tags:
+        - Base
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/terms/{term}/children':
+    summary: Retreive list of children associated with the term
+    parameters:
+      - in: path
+        name: term
+        schema:
+          type: string
+        required: true
+        description: Numeric ID or slug of the term to get
+      - $ref: '#/components/parameters/pageParam'
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/sortParam'
+
+    get:
+      summary: Get list of children for an individual terms
+      description: ''
+      operationId: termChildren
+      tags:
+        - Base
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Term'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+  /translations:
+    summary: Manage language translations under this path
+    get:
+      summary: Get list of all phrase using pagination
+      description: ''
+      operationId: translationsList
+      tags:
+        - Base
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Phrase'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    post:
+      summary: Create New Phrase
+      description: ''
+      operationId: phraseCreate
+      tags:
+        - Base
+      requestBody:
+        $ref: '#/components/requestBodies/PhraseForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Phrase'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/translations/{phrase}':
+    summary: Operations related to a single phrase
+    parameters:
+      - in: path
+        name: phrase
+        schema:
+          type: string
+        required: true
+        description: Numeric ID or slug of the phrase to get
+    get:
+      summary: Get An individual phrase
+      description: ''
+      operationId: phraseGet
+      tags:
+        - Base
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Phrase'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual phrase
+      description: ''
+      operationId: phraseUdate
+      tags:
+        - Base
+      requestBody:
+        $ref: '#/components/requestBodies/PhraseForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Phrase'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual term
+      description: ''
+      operationId: phraseDelete
+      tags:
+        - Base
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/public/trans/{language}/{category-slug}':
+    summary: Operations related to a single phrase
+    parameters:
+      - in: path
+        name: language
+        schema:
+          type: string
+        required: true
+        description: 2 character iso code for language
+      - in: path
+        name: 'category-slug'
+        schema:
+          type: string
+        required: true
+        description: Optional Slug of category for which phrases needs to be retreived
+    get:
+      summary: Get set of translations with targetting category as an option
+      description: ''
+      operationId: transGet
+      tags:
+        - Base
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  slug:
+                    type: string
+                    description: The slug of phrase
+                    example: Translation String
+
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+  # Users module
+  /users:
+    summary: All basic calls for the users
+    get:
+      summary: Get List of all users
+      description: ''
+      operationId: usersList
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    post:
+      summary: Create New User
+      description: ''
+      operationId: userCreate
+      tags:
+        - User
+      requestBody:
+        $ref: '#/components/requestBodies/UserForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/users/{user}':
+    summary: Operations related to a single user
+    parameters:
+      - in: path
+        name: user
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of an individual user
+    get:
+      summary: Get An individual user
+      description: ''
+      operationId: userGet
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual user
+      description: ''
+      operationId: userUpdate
+      tags:
+        - User
+      requestBody:
+        $ref: '#/components/requestBodies/UserForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Term'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual user
+      description: ''
+      operationId: userDelete
+      tags:
+        - User
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  /roles:
+    summary: All basic calls for the roles
+    get:
+      summary: Get List of all roles
+      description: ''
+      operationId: rolesList
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Role'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+    post:
+      summary: Create New Role
+      description: ''
+      operationId: roleCreate
+      tags:
+        - User
+      requestBody:
+        $ref: '#/components/requestBodies/RoleForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Role'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/roles/{role}':
+    summary: Operations related to a single user
+    parameters:
+      - in: path
+        name: role
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of an individual role
+    get:
+      summary: Get An individual role
+      description: ''
+      operationId: roleGet
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Role'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual user
+      description: ''
+      operationId: roleUpdate
+      tags:
+        - User
+      requestBody:
+        $ref: '#/components/requestBodies/RoleForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Role'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual role
+      description: ''
+      operationId: roleDelete
+      tags:
+        - User
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  /permissions:
+    summary: All basic calls for the permissions
+    get:
+      summary: Get List of all permissions
+      description: ''
+      operationId: permissionList
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Permission'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+
+    post:
+      summary: Create New permission
+      description: ''
+      operationId: permissionCreate
+      tags:
+        - User
+      requestBody:
+        $ref: '#/components/requestBodies/PermissionForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Permission'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/permissions/{permission}':
+    summary: Operations related to a single permission
+    parameters:
+      - in: path
+        name: permission
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of an individual permission
+    get:
+      summary: Get An individual permission
+      description: ''
+      operationId: permissionGet
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Permission'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual user
+      description: ''
+      operationId: permissionUpdate
+      tags:
+        - User
+      requestBody:
+        $ref: '#/components/requestBodies/PermissionForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Permission'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual permission
+      description: ''
+      operationId: permissionDelete
+      tags:
+        - User
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  /auth:
+    summary: All operations related to a user authentication
+    get:
+      summary: Get authenticated User's information
+      description: ''
+      operationId: authGet
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  api_token:
+                    type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    post:
+      summary: Get Credentials Verified
+      description: ''
+      operationId: authValidate
+      tags:
+        - User
+      requestBody:
+        description: Validate via email or username
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  api_token:
+                    type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  # Entity Module Started
+  /persons:
+    summary: Everything related to general person related calls
+    get:
+      summary: Get List of all persons on system
+      description: ''
+      operationId: personList
+      tags:
+        - Entity
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Person'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New Person
+      description: ''
+      operationId: personCreate
+      tags:
+        - Entity
+      requestBody:
+        $ref: '#/components/requestBodies/PersonForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Person'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/persons/{person}':
+    summary: Operations related to a single person
+    parameters:
+      - in: path
+        name: person
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the person model
+    get:
+      summary: Get An individual person
+      description: ''
+      operationId: personGet
+      tags:
+        - Entity
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Person'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual person
+      description: ''
+      operationId: personUdate
+      tags:
+        - Entity
+      requestBody:
+        $ref: '#/components/requestBodies/PersonForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Person'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual person
+      description: ''
+      operationId: personDelete
+      tags:
+        - Entity
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  /companies:
+    summary: General call for all companies
+    get:
+      summary: Get List of all companies on system
+      description: ''
+      operationId: companyList
+      tags:
+        - Entity
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Company'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New Company
+      description: ''
+      operationId: companyCreate
+      tags:
+        - Entity
+      requestBody:
+        $ref: '#/components/requestBodies/CompanyForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Company'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/companies/{company}':
+    summary: Operations related to a single company
+    parameters:
+      - in: path
+        name: company
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the company model
+    get:
+      summary: Get An individual company
+      description: ''
+      operationId: companyGet
+      tags:
+        - Entity
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Company'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual company
+      description: ''
+      operationId: companyUdate
+      tags:
+        - Entity
+      requestBody:
+        $ref: '#/components/requestBodies/CompanyForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Company'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual company
+      description: ''
+      operationId: companyDelete
+      tags:
+        - Entity
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  /branches:
+    summary: Everything related to general branch related calls
+    get:
+      summary: Get List of all branches on system
+      description: ''
+      operationId: branchList
+      tags:
+        - Entity
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Branch'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    post:
+      summary: Create New Branch
+      description: ''
+      operationId: branchCreate
+      tags:
+        - Entity
+      requestBody:
+        $ref: '#/components/requestBodies/BranchForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Branch'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/branches/{branch}':
+    summary: Operations related to a single branch
+    parameters:
+      - in: path
+        name: branch
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the branch model
+    get:
+      summary: Get An individual branch
+      description: ''
+      operationId: branchGet
+      tags:
+        - Entity
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Branch'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+    patch:
+      summary: Update an individual branch
+      description: ''
+      operationId: branchUdate
+      tags:
+        - Entity
+      requestBody:
+        $ref: '#/components/requestBodies/BranchForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Branch'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual branch
+      description: ''
+      operationId: branchDelete
+      tags:
+        - Entity
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  ## Branch CRUDs related to the companies
+  '/companies/{company}/branches':
+    summary: All operations for branches of an individual company
+    parameters:
+      - in: path
+        name: company
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the company model
+    get:
+      summary: Get List of all branches of a single company
+      description: ''
+      operationId: companyBranchList
+      tags:
+        - Entity
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Branch'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    post:
+      summary: Create New Branch for a company
+      description: ''
+      operationId: companyBranchCreate
+      tags:
+        - Entity
+      requestBody:
+        $ref: '#/components/requestBodies/BranchForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Branch'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/company/{company}/branches/{branch}':
+    summary: Operations related to a single branch of a company
+    parameters:
+      - in: path
+        name: company
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the company model
+      - in: path
+        name: branch
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the branch model
+    get:
+      summary: Get An individual branch of a company
+      description: ''
+      operationId: companyBranchGet
+      tags:
+        - Entity
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Branch'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual branch of a company
+      description: ''
+      operationId: companyBranchUdate
+      tags:
+        - Entity
+      requestBody:
+        $ref: '#/components/requestBodies/BranchForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Branch'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual branch of a company
+      description: ''
+      operationId: companyBranchDelete
+      tags:
+        - Entity
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  # Notification Module
+  /emails:
+    summary: All basic calls for the emails
+    get:
+      summary: Get List of all emails
+      description: ''
+      operationId: emailList
+      tags:
+        - Notifier
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/EmailNotification'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    post:
+      summary: Create New email
+      description: ''
+      operationId: emailCreate
+      tags:
+        - Notifier
+      requestBody:
+        $ref: '#/components/requestBodies/EmailNotificationForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/EmailNotification'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/emails/{email}':
+    summary: Operations related to a single email
+    parameters:
+      - in: path
+        name: email
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of an individual email
+    get:
+      summary: Get An individual email
+      description: ''
+      operationId: emailGet
+      tags:
+        - Notifier
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/EmailNotification'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual user
+      description: ''
+      operationId: emailUpdate
+      tags:
+        - Notifier
+      requestBody:
+        $ref: '#/components/requestBodies/EmailNotificationForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/EmailNotification'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual email
+      description: ''
+      operationId: emailDelete
+      tags:
+        - Notifier
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/push-notifications':
+    summary: All basic calls for the push-notifications
+    get:
+      summary: Get List of all push-notifications
+      description: ''
+      operationId: pushList
+      tags:
+        - Notifier
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PushNotification'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Term'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+
+    post:
+      summary: Create New push-notification
+      description: ''
+      operationId: pushCreate
+      tags:
+        - Notifier
+      requestBody:
+        $ref: '#/components/requestBodies/PushNotificationForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PushNotification'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/push-notifications/{pushnotification}':
+    summary: Operations related to a single push-notification
+    parameters:
+      - in: path
+        name: pushnotification
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of an individual push-notification
+    get:
+      summary: Get An individual push-notification
+      description: ''
+      operationId: pushGet
+      tags:
+        - Notifier
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PushNotification'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+    patch:
+      summary: Update an individual user
+      description: ''
+      operationId: pushUpdate
+      tags:
+        - Notifier
+      requestBody:
+        $ref: '#/components/requestBodies/PushNotificationForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PushNotification'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual push-notification
+      description: ''
+      operationId: pushDelete
+      tags:
+        - Notifier
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/sms-notifications':
+    summary: All basic calls for the sms-notifications
+    get:
+      summary: Get List of all sms-notifications
+      description: ''
+      operationId: smsList
+      tags:
+        - Notifier
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/SmsNotification'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+
+    post:
+      summary: Create New sms-notification
+      description: ''
+      operationId: smsCreate
+      tags:
+        - Notifier
+      requestBody:
+        $ref: '#/components/requestBodies/SmsNotificationForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PushNotification'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/sms-notifications/{smsnotification}':
+    summary: Operations related to a single sms-notification
+    parameters:
+      - in: path
+        name: smsnotification
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of an individual sms-notification
+    get:
+      summary: Get An individual sms-notification
+      description: ''
+      operationId: smsGet
+      tags:
+        - Notifier
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PushNotification'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual user
+      description: ''
+      operationId: smsUpdate
+      tags:
+        - Notifier
+      requestBody:
+        $ref: '#/components/requestBodies/SmsNotificationForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PushNotification'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual sms-notification
+      description: ''
+      operationId: smsDelete
+      tags:
+        - Notifier
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+  # Product Module
+  /products:
+    summary: Everything related to products
+    get:
+      summary: Get List of all products on system
+      description: ''
+      operationId: productList
+      tags:
+        - Product
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New Product
+      description: ''
+      operationId: productCreate
+      tags:
+        - Product
+      requestBody:
+        $ref: '#/components/requestBodies/ProductForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/products/{product}':
+    summary: Operations related to a single product
+    parameters:
+      - in: path
+        name: product
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the product model
+    get:
+      summary: Get An individual person
+      description: ''
+      operationId: productGet
+      tags:
+        - Product
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual product
+      description: ''
+      operationId: productUdate
+      tags:
+        - Entity
+      requestBody:
+        $ref: '#/components/requestBodies/ProductForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual product
+      description: ''
+      operationId: productDelete
+      tags:
+        - Product
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+  # Products Attribute
+  '/product-attributes':
+    summary: Everything related to general productattr related calls
+    get:
+      summary: Get List of all product-attributes on system
+      description: ''
+      operationId: productattrList
+      tags:
+        - ProductAttributes
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/FormFields'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New Product Attribute
+      description: ''
+      operationId: productattrCreate
+      tags:
+        - ProductAttributes
+      requestBody:
+        $ref: '#/components/requestBodies/FormFieldsForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/FormFields'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/product-attributes/{productattr}':
+    summary: Operations related to a single productattr
+    parameters:
+      - in: path
+        name: productattr
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the productattr model
+    get:
+      summary: Get An individual productattr
+      description: ''
+      operationId: productattrGet
+      tags:
+        - ProductAttributes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/FormFields'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual productattr
+      description: ''
+      operationId: productattrUdate
+      tags:
+        - ProductAttributes
+      requestBody:
+        $ref: '#/components/requestBodies/FormFieldsForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/FormFields'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual productattr
+      description: ''
+      operationId: productattrDelete
+      tags:
+        - ProductAttributes
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  # eCommerce Module
+  /orders:
+    summary: Everything related to orders
+    get:
+      summary: Get List of all orders on system
+      description: ''
+      operationId: orderList
+      tags:
+        - Ecommerce
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New Order
+      description: ''
+      operationId: orderCreate
+      tags:
+        - Ecommerce
+      requestBody:
+        $ref: '#/components/requestBodies/OrderForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/orders/{order}':
+    summary: Operations related to a single order
+    parameters:
+      - in: path
+        name: order
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the order model
+    get:
+      summary: Get An individual person
+      description: ''
+      operationId: orderGet
+      tags:
+        - Ecommerce
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual order
+      description: ''
+      operationId: orderUdate
+      tags:
+        - Entity
+      requestBody:
+        $ref: '#/components/requestBodies/OrderForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual order
+      description: ''
+      operationId: orderDelete
+      tags:
+        - Ecommerce
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  /public/cart:
+    summary: Operations related to user's cart
+    get:
+      summary: Get List of all products on system
+      description: ''
+      operationId: cardGet
+      tags:
+        - Ecommerce
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartOrder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    post:
+      summary: Add Item to Cart
+      description: ''
+      operationId: cartAdd
+      tags:
+        - Ecommerce
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                qty:
+                  type: integer
+                attributes:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartOrder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/public/cart-shipment':
+    summary: Operations related to user's cart
+
+    post:
+      summary: Create Shipment
+      description: ''
+      operationId: cartShipment
+      tags:
+        - Ecommerce
+      requestBody:
+        $ref: '#/components/requestBodies/CartShipmentForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartReview'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/place-order':
+    summary: Place order from frontend
+
+    post:
+      summary: Create an order
+      description: ''
+      operationId: orderPlacement
+      tags:
+        - Ecommerce
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                products:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartReview'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  # CMS Module
+  /pages:
+    summary: Everything related to pages
+    get:
+      summary: Get List of all pages on system
+      description: ''
+      operationId: pageList
+      tags:
+        - Cms
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Page'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New Page
+      description: ''
+      operationId: pageCreate
+      tags:
+        - Cms
+      requestBody:
+        $ref: '#/components/requestBodies/PageForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Page'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/pages/{page}':
+    summary: Operations related to a single page
+    parameters:
+      - in: path
+        name: page
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the page model
+    get:
+      summary: Get An individual person
+      description: ''
+      operationId: pageGet
+      tags:
+        - Cms
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Page'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual page
+      description: ''
+      operationId: pageUdate
+      tags:
+        - Entity
+      requestBody:
+        $ref: '#/components/requestBodies/PageForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Page'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual page
+      description: ''
+      operationId: pageDelete
+      tags:
+        - Cms
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  /menus:
+    summary: Everything related to menus
+    get:
+      summary: Get List of all menus on system
+      description: ''
+      operationId: menuList
+      tags:
+        - Cms
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Menu'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New Menu
+      description: ''
+      operationId: menuCreate
+      tags:
+        - Cms
+      requestBody:
+        $ref: '#/components/requestBodies/MenuForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Menu'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/menus/{menu}':
+    summary: Operations related to a single menu
+    parameters:
+      - in: path
+        name: menu
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the menu model
+    get:
+      summary: Get An individual person
+      description: ''
+      operationId: menuGet
+      tags:
+        - Cms
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Menu'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual menu
+      description: ''
+      operationId: menuUdate
+      tags:
+        - Entity
+      requestBody:
+        $ref: '#/components/requestBodies/MenuForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Menu'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual menu
+      description: ''
+      operationId: menuDelete
+      tags:
+        - Cms
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  ## Payment Module
+  /invoices:
+    summary: Everything related to general invoice related calls
+    get:
+      summary: Get List of all invoices on system
+      description: ''
+      operationId: invoiceList
+      tags:
+        - Payment
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New Person
+      description: ''
+      operationId: invoiceCreate
+      tags:
+        - Payment
+      requestBody:
+        $ref: '#/components/requestBodies/InvoiceForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/invoices/{invoice}':
+    summary: Operations related to a single invoice
+    parameters:
+      - in: path
+        name: invoice
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the invoice model
+    get:
+      summary: Get An individual invoice
+      description: ''
+      operationId: invoiceGet
+      tags:
+        - Payment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual invoice
+      description: ''
+      operationId: invoiceUdate
+      tags:
+        - Payment
+      requestBody:
+        $ref: '#/components/requestBodies/InvoiceForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Person'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual invoice
+      description: ''
+      operationId: invoiceDelete
+      tags:
+        - Payment
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/recurring-profile':
+    summary: Everything related to recurring profiles
+    get:
+      summary: Get List of all recurring profiles on system
+      description: ''
+      operationId: recurringProfileList
+      tags:
+        - Payment
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/RecurringProfile'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New Recurring Profile
+      description: ''
+      operationId: recurringProfileCreate
+      tags:
+        - Payment
+      requestBody:
+        $ref: '#/components/requestBodies/RecurringProfileForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/RecurringProfile'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/recurring-profile/{recurring_profile}':
+    summary: Operations related to a single invoice
+    parameters:
+      - in: path
+        name: recurring_profile
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the invoice model
+    get:
+      summary: Get An individual Recurring Profile
+      description: ''
+      operationId: recurringProfileGet
+      tags:
+        - Payment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/RecurringProfile'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual Recurring Profile
+      description: ''
+      operationId: recurringProfileUpdate
+      tags:
+        - Payment
+      requestBody:
+        $ref: '#/components/requestBodies/RecurringProfileForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/RecurringProfile'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual Recurring Profile
+      description: ''
+      operationId: recurringProfileGetDelete
+      tags:
+        - Payment
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/payment-records':
+    summary: Everything related to general payment related calls
+    get:
+      summary: Get List of all payment records on system
+      description: ''
+      operationId: paymentRecordsList
+      tags:
+        - Payment
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/PaymentRecord'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New Payment Record
+      description: ''
+      operationId: paymentRecordCreate
+      tags:
+        - Payment
+      requestBody:
+        $ref: '#/components/requestBodies/PaymentRecordForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PaymentRecord'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/payment-records/{payment}':
+    summary: Operations related to a single payment
+    parameters:
+      - in: path
+        name: payment
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the payment model
+    get:
+      summary: Get An individual payment record
+      description: ''
+      operationId: paymentRecordGet
+      tags:
+        - Payment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PaymentRecord'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual person
+      description: ''
+      operationId: paymentRecordUpdate
+      tags:
+        - Payment
+      requestBody:
+        $ref: '#/components/requestBodies/PaymentRecordForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PaymentRecord'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual person
+      description: ''
+      operationId: paymentRecordDelete
+      tags:
+        - Payment
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  ## Customer Module
+  /customers:
+    summary: Everything related to general customer related calls
+    get:
+      summary: Get List of all customers on system
+      description: ''
+      operationId: customerList
+      tags:
+        - Customer
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Person'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New Person
+      description: ''
+      operationId: customerCreate
+      tags:
+        - Customer
+      requestBody:
+        $ref: '#/components/requestBodies/PersonForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Person'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/customers/{customer}':
+    summary: Operations related to a single customer
+    parameters:
+      - in: path
+        name: customer
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the customer model
+    get:
+      summary: Get An individual customer
+      description: ''
+      operationId: customerGet
+      tags:
+        - Customer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Person'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual customer
+      description: ''
+      operationId: customerUdate
+      tags:
+        - Customer
+      requestBody:
+        $ref: '#/components/requestBodies/PersonForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Person'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual customer
+      description: ''
+      operationId: customerDelete
+      tags:
+        - Customer
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+  '/customers/{customer}/addresses':
+    summary: Operations related to a single customer
+    parameters:
+      - in: path
+        name: customer
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the customer model
+    get:
+      summary: Get An individual customer's addresses
+      description: ''
+      operationId: customerAddressGet
+      tags:
+        - Customer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      addresses:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Person'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  # Classified Module
+  /classifieds:
+    summary: All basic calls for the classifieds
+    get:
+      summary: Get List of all classifieds
+      description: ''
+      operationId: classifiedList
+      tags:
+        - Classified
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Classified'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    post:
+      summary: Create New classified
+      description: ''
+      operationId: classifiedCreate
+      tags:
+        - Classified
+      requestBody:
+        $ref: '#/components/requestBodies/ClassifiedForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Classified'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/classifieds/{classified}':
+    summary: Operations related to a single classified
+    parameters:
+      - in: path
+        name: classified
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of an individual classified
+    get:
+      summary: Get An individual classified
+      description: ''
+      operationId: classifiedGet
+      tags:
+        - Classified
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Classified'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual user
+      description: ''
+      operationId: classifiedUpdate
+      tags:
+        - Classified
+      requestBody:
+        $ref: '#/components/requestBodies/ClassifiedForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Classified'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual classified
+      description: ''
+      operationId: classifiedDelete
+      tags:
+        - Classified
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+#  '/classifieds/{classified}/favourite':
+#    summary: Operations related to making classified favourite
+#    parameters:
+#      - in: path
+#        name: classified
+#        schema:
+#          type: integer
+#        required: true
+#        description: Numeric ID of an individual classified
+#    get:
+#      summary: Get An individual classified
+#      description: ''
+#      operationId: classifiedFavourite
+#      tags:
+#        - Classified
+#      responses:
+#        '200':
+#          description: OK
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/responses/SuccessfulRequest'
+#
+#        '401':
+#          $ref: '#/components/responses/Unauthorized'
+#        '404':
+#          $ref: '#/components/responses/NotFound'
+#        '5XX':
+#          $ref: '#/components/responses/UnepectedError'
+#
+#    delete:
+#      summary: Delete An individual classified
+#      description: ''
+#      operationId: classifiedFavouriteDelete
+#      tags:
+#        - Classified
+#      responses:
+#        '200':
+#          description: OK
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/responses/SuccessfulRequest'
+#
+#        '401':
+#          $ref: '#/components/responses/Unauthorized'
+#        '404':
+#          $ref: '#/components/responses/NotFound'
+#        '5XX':
+#          $ref: '#/components/responses/UnepectedError'
+
+  '/classifieds/{classified}/price-drops':
+    summary: Endpoints for price drop management
+    parameters:
+      - in: path
+        name: classified
+        schema:
+          type: integer
+        required: true
+        description: Subscribe to price drop
+    get:
+      summary: Subscribe to price drop
+      description: ''
+      operationId: classifiedPriceDrop
+      tags:
+        - Classified
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/SuccessfulRequest'
+
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete An individual classified price drop
+      description: ''
+      operationId: classifiedDeletePriceDrop
+      tags:
+        - Classified
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/SuccessfulRequest'
+
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  # Classified Categories
+  /classified-categories:
+    summary: All basic calls to main object URL
+    get:
+      summary: Get List of all classified categories
+      description: ''
+      operationId: classifiedcategoriesList
+      tags:
+        - Classified
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ClassifiedTerm'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    post:
+      summary: Create New ClassifiedTerm
+      description: ''
+      operationId: classfiedCategoryCreate
+      tags:
+        - Classified
+      requestBody:
+        $ref: '#/components/requestBodies/ClassifiedTermForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ClassifiedTerm'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/classified-categories/{classfiedCategory}':
+    summary: Operations related to a single classfiedCategory
+    parameters:
+      - in: path
+        name: classfiedCategory
+        schema:
+          type: string
+        required: true
+        description: Numeric ID or slug of the classfiedCategory to get
+    get:
+      summary: Get An individual classfiedCategory
+      description: ''
+      operationId: classfiedCategoryGet
+      tags:
+        - Classified
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ClassifiedTerm'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual classfiedCategory
+      description: ''
+      operationId: classfiedCategoryUpdate
+      tags:
+        - Classified
+      requestBody:
+        $ref: '#/components/requestBodies/ClassifiedTermForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ClassifiedTerm'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual classfiedCategory
+      description: ''
+      operationId: classfiedCategoryDelete
+      tags:
+        - Classified
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/classified-categories/{classfiedCategory}/children':
+    summary: Retreive list of children associated with the classfiedCategory
+    parameters:
+      - in: path
+        name: classfiedCategory
+        schema:
+          type: string
+        required: true
+        description: Numeric ID or slug of the classfiedCategory to get
+      - $ref: '#/components/parameters/pageParam'
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/sortParam'
+
+    get:
+      summary: Get list of children for an individual classified-categories
+      description: ''
+      operationId: classfiedCategoryChildren
+      tags:
+        - Classified
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ClassifiedTerm'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+  /classified-definitions:
+    summary: Everything related to general classifiedDefinition related calls
+    get:
+      summary: Get List of all classified-definitions on system
+      description: ''
+      operationId: classifiedDefinitionList
+      tags:
+        - Classified
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ClassifiedDefinition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New ClassifiedDefinition
+      description: ''
+      operationId: classifiedDefinitionCreate
+      tags:
+        - Classified
+      requestBody:
+        $ref: '#/components/requestBodies/ClassifiedDefinitionForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ClassifiedDefinition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/classified-definitions/{classifiedDefinition}':
+    summary: Operations related to a single classifiedDefinition
+    parameters:
+      - in: path
+        name: classifiedDefinition
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the classifiedDefinition model
+    get:
+      summary: Get An individual classifiedDefinition
+      description: ''
+      operationId: classifiedDefinitionGet
+      tags:
+        - Classified
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ClassifiedDefinition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual classifiedDefinition
+      description: ''
+      operationId: classifiedDefinitionUdate
+      tags:
+        - Classified
+      requestBody:
+        $ref: '#/components/requestBodies/ClassifiedDefinitionForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ClassifiedDefinition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual classifiedDefinition
+      description: ''
+      operationId: classifiedDefinitionDelete
+      tags:
+        - Classified
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+
+  '/classified-definitions/{classifiedDefinition}/fields':
+    parameters:
+      - in: path
+        name: classifiedDefinition
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the classifiedDefinition model
+    summary: Everything related to general classifiedDefinition related calls
+    get:
+      summary: Get List of all classified-definitions fields on system
+      description: ''
+      operationId: classifiedDefinitionFieldList
+      tags:
+        - Classified
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ClassifiedDefinitionField'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New ClassifiedDefinition
+      description: ''
+      operationId: classifiedDefinitionFieldCreate
+      tags:
+        - Classified
+      requestBody:
+        $ref: '#/components/requestBodies/ClassifiedDefinitionFieldForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ClassifiedDefinitionField'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/classified-definitions/{classifiedDefinition}/fields/{field}':
+    summary: Operations related to a single classifiedDefinition
+    parameters:
+      - in: path
+        name: classifiedDefinition
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the classifiedDefinition model
+      - in: path
+        name: field
+        required: true
+        schema:
+          type: integer
+        description: The numbers of items to return
+
+    get:
+      summary: Get An individual classifiedDefinition field
+      description: ''
+      operationId: classifiedDefinitionFieldGet
+      tags:
+        - Classified
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ClassifiedDefinitionField'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual classifiedDefinition field
+      description: ''
+      operationId: classifiedDefinitionFieldUpdate
+      tags:
+        - Classified
+      requestBody:
+        $ref: '#/components/requestBodies/ClassifiedDefinitionFieldForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ClassifiedDefinitionField'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual classifiedDefinition Field
+      description: ''
+      operationId: classifiedDefinitionFieldDelete
+      tags:
+        - Classified
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+  # Moderation Module
+  /moderations:
+    summary: All basic calls for the moderations
+    get:
+      summary: Get List of all moderations
+      description: ''
+      operationId: moderationList
+      tags:
+        - Moderation
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Moderation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    post:
+      summary: Create New moderation
+      description: ''
+      operationId: moderationCreate
+      tags:
+        - Moderation
+      requestBody:
+        $ref: '#/components/requestBodies/ModerationForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Moderation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/moderations/{moderation}':
+    summary: Operations related to a single moderation
+    parameters:
+      - in: path
+        name: moderation
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of an individual moderation
+    get:
+      summary: Get An individual moderation
+      description: ''
+      operationId: moderationGet
+      tags:
+        - Moderation
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Moderation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual user
+      description: ''
+      operationId: moderationUpdate
+      tags:
+        - Moderation
+      requestBody:
+        $ref: '#/components/requestBodies/ModerationForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Moderation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual moderation
+      description: ''
+      operationId: moderationDelete
+      tags:
+        - Moderation
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  # Multistore
+  /stores:
+    summary: Everything related to general store related calls
+    get:
+      summary: Get List of all stores on system
+      description: ''
+      operationId: storeList
+      tags:
+        - Multistore
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Store'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New Store
+      description: ''
+      operationId: storeCreate
+      tags:
+        - Multistore
+      requestBody:
+        $ref: '#/components/requestBodies/StoreForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Store'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/stores/{store}':
+    summary: Operations related to a single store
+    parameters:
+      - in: path
+        name: store
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the store model
+    get:
+      summary: Get An individual store
+      description: ''
+      operationId: storeGet
+      tags:
+        - Multistore
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Store'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual store
+      description: ''
+      operationId: storeUdate
+      tags:
+        - Multistore
+      requestBody:
+        $ref: '#/components/requestBodies/StoreForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Store'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual store
+      description: ''
+      operationId: storeDelete
+      tags:
+        - Multistore
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+  # Shipping
+  /shipping-methods:
+    summary: Everything related to general shippingMethod related calls
+    get:
+      summary: Get List of all shipping-methods on system
+      description: ''
+      operationId: shippingMethodList
+      tags:
+        - Shipping
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ShippingMethod'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New ShippingMethod
+      description: ''
+      operationId: shippingMethodCreate
+      tags:
+        - Shipping
+      requestBody:
+        $ref: '#/components/requestBodies/ShippingMethodForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ShippingMethod'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/shipping-methods/{shippingMethod}':
+    summary: Operations related to a single shippingMethod
+    parameters:
+      - in: path
+        name: shippingMethod
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the shippingMethod model
+    get:
+      summary: Get An individual shippingMethod
+      description: ''
+      operationId: shippingMethodGet
+      tags:
+        - Shipping
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ShippingMethod'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual shippingMethod
+      description: ''
+      operationId: shippingMethodUdate
+      tags:
+        - Shipping
+      requestBody:
+        $ref: '#/components/requestBodies/ShippingMethodForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ShippingMethod'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual shippingMethod
+      description: ''
+      operationId: shippingMethodDelete
+      tags:
+        - Shipping
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  /shipping-zones:
+    summary: Everything related to general shippingZone related calls
+    get:
+      summary: Get List of all shipping-zones on system
+      description: ''
+      operationId: shippingZoneList
+      tags:
+        - Shipping
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ShippingZone'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New ShippingZone
+      description: ''
+      operationId: shippingZoneCreate
+      tags:
+        - Shipping
+      requestBody:
+        $ref: '#/components/requestBodies/ShippingZoneForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ShippingZone'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/shipping-zones/{shippingZone}':
+    summary: Operations related to a single shippingZone
+    parameters:
+      - in: path
+        name: shippingZone
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the shippingZone model
+    get:
+      summary: Get An individual shippingZone
+      description: ''
+      operationId: shippingZoneGet
+      tags:
+        - Shipping
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ShippingZone'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual shippingZone
+      description: ''
+      operationId: shippingZoneUdate
+      tags:
+        - Shipping
+      requestBody:
+        $ref: '#/components/requestBodies/ShippingZoneForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ShippingZone'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual shippingZone
+      description: ''
+      operationId: shippingZoneDelete
+      tags:
+        - Shipping
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  # Service
+  /services:
+    summary: Everything related to general service related calls
+    get:
+      summary: Get List of all services on system
+      description: ''
+      operationId: serviceList
+      tags:
+        - Service
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Service'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New Service
+      description: ''
+      operationId: serviceCreate
+      tags:
+        - Service
+      requestBody:
+        $ref: '#/components/requestBodies/ServiceForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Service'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/services/{service}':
+    summary: Operations related to a single service
+    parameters:
+      - in: path
+        name: service
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the service model
+    get:
+      summary: Get An individual service
+      description: ''
+      operationId: serviceGet
+      tags:
+        - Service
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Service'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual service
+      description: ''
+      operationId: serviceUdate
+      tags:
+        - Service
+      requestBody:
+        $ref: '#/components/requestBodies/ServiceForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Service'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual service
+      description: ''
+      operationId: serviceDelete
+      tags:
+        - Service
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  /service-orders:
+    summary: Everything related to general serviceOrder related calls
+    get:
+      summary: Get List of all service-orders on system
+      description: ''
+      operationId: serviceOrderList
+      tags:
+        - Service
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ServiceOrder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New ServiceOrder
+      description: ''
+      operationId: serviceOrderCreate
+      tags:
+        - Service
+      requestBody:
+        $ref: '#/components/requestBodies/ServiceOrderForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ServiceOrder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/service-orders/{serviceOrder}':
+    summary: Operations related to a single serviceOrder
+    parameters:
+      - in: path
+        name: serviceOrder
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the serviceOrder model
+    get:
+      summary: Get An individual serviceOrder
+      description: ''
+      operationId: serviceOrderGet
+      tags:
+        - Service
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ServiceOrder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual serviceOrder
+      description: ''
+      operationId: serviceOrderUdate
+      tags:
+        - Service
+      requestBody:
+        $ref: '#/components/requestBodies/ServiceOrderForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ServiceOrder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual serviceOrder
+      description: ''
+      operationId: serviceOrderDelete
+      tags:
+        - Service
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  # Quote Module
+  /quotes:
+    summary: Everything related to general quote related calls
+    get:
+      summary: Get List of all quotes on system
+      description: ''
+      operationId: quoteList
+      tags:
+        - Quote
+      parameters:
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ResponsePaginate'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Quote'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+
+    post:
+      summary: Create New Quote
+      description: ''
+      operationId: quoteCreate
+      tags:
+        - Quote
+      requestBody:
+        $ref: '#/components/requestBodies/QuoteForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Quote'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+  '/quotes/{quote}':
+    summary: Operations related to a single quote
+    parameters:
+      - in: path
+        name: quote
+        schema:
+          type: integer
+        required: true
+        description: Numeric ID of the quote model
+    get:
+      summary: Get An individual quote
+      description: ''
+      operationId: quoteGet
+      tags:
+        - Quote
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Quote'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    patch:
+      summary: Update an individual quote
+      description: ''
+      operationId: quoteUdate
+      tags:
+        - Quote
+      requestBody:
+        $ref: '#/components/requestBodies/QuoteForm'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Quote'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+    delete:
+      summary: Delete an individual quote
+      description: ''
+      operationId: quoteDelete
+      tags:
+        - Quote
+      responses:
+        '200':
+          $ref: '#/components/responses/ObjectDeleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/UnepectedError'
+
+components:
+  parameters:
+    pageParam:
+      name: page
+      in: query
+      description: Current page number that needs to be rendered
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of items to return.
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 20
+    sortParam:
+      name: sort
+      in: query
+      description: Explain the sorting mechnism for the API
+      required: false
+      schema:
+        type: string
+
+  requestBodies:
+    ClassifiedTermForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/ClassifiedTerm'
+
+    TermForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Term'
+
+    PhraseForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Phrase'
+    PersonForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Person'
+    CompanyForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Company'
+    BranchForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Branch'
+    AddressForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Address'
+
+    UserForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/User'
+    RoleForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Role'
+    PermissionForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Permission'
+    NotificationForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Notification'
+    EmailNotificationForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/EmailNotification'
+    SmsNotificationForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/SmsNotification'
+    PushNotificationForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/PushNotification'
+
+    ProductForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Product'
+
+    OrderForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Order'
+
+    PageForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Page'
+
+    MenuForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Menu'
+
+    CartShipmentForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/CartShipment'
+
+    RecurringProfileForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/RecurringProfile'
+
+    InvoiceForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Invoice'
+
+    PaymentRecordForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/PaymentRecord'
+
+    ClassifiedForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Classified'
+
+    ClassifiedDefinitionForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/ClassifiedDefinition'
+
+    ClassifiedDefinitionFieldForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/ClassifiedDefinitionField'
+
+    ModerationForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Moderation'
+
+    FormFieldsForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/FormFields'
+
+    StoreForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Store'
+
+    ShippingMethodForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/ShippingMethod'
+
+    ShippingZoneForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/ShippingZone'
+
+    ServiceForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Service'
+
+    ServiceOrderForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/ServiceOrder'
+
+    QuoteForm:
+      required: true
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Quote'
+
+  responses:
+    SuccessfulRequest:
+      description: A success message on processing a request
+#      content:
+#        application/json:
+#          schema:
+#            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: A user with the specified ID was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authorization information is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnepectedError:
+      description: Unexpected error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ObjectDeleted:
+      description: Requested Item has been deleted successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+
+  schemas:
+    Term:
+      type: object
+      properties:
+        title:
+          type: string
+        slug:
+          type: string
+        parent_id:
+          type: string
+        extra:
+          type: array
+          items: { }
+        module_name:
+          type: string
+      required:
+        - title
+        - slug
+
+      example:
+        - title: Gender
+          slug: gender
+          parent_id: 0
+          extra: { }
+          module_name: base
+
+    ClassifiedTerm:
+      allOf:
+        - $ref: '#/components/schemas/Term'
+        - type: object
+          properties:
+            attribute_categories:
+              type: array
+              items:
+                type: integer
+          example:
+            - attribute_categories: [ 5, 6 ]
+    Phrase:
+      type: object
+      properties:
+        phrase:
+          type: string
+        slug:
+          type: string
+        lang:
+          type: string
+        module_name:
+          type: string
+        unstable:
+          type: boolean
+        locked:
+          type: boolean
+      required:
+        - phrase
+        - slug
+        - lang
+
+      example:
+        - phrase: 'Hello World'
+          slug: 'hello.word'
+          lang: en
+          module_name: base
+          unstable: false
+          locked: true
+
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        lang:
+          type: string
+        email:
+          type: string
+        permissions:
+          type: array
+          items: { }
+        roles:
+          type: array
+          items: { }
+      required:
+        - username
+        - password
+        - email
+
+      example:
+        - username: 'john'
+          password: 'testing123'
+          lang: en
+          email: abc@testing.com
+          permissions: [ create.user, create.person ]
+          roles: [ admin ]
+
+    Role:
+      type: object
+      properties:
+        name:
+          type: string
+        guard_name:
+          type: string
+        permissions:
+          type: array
+          items: { }
+      required:
+        - name
+        - guard_name
+      example:
+        - name: 'admin'
+          guard_name: 'testing123'
+          permissions: [ 1,5,10 ]
+
+    Permission:
+      type: object
+      properties:
+        name:
+          type: string
+        guard_name:
+          type: string
+      required:
+        - name
+        - guard_name
+      example:
+        - name: 'create.user'
+          guard_name: '*'
+
+    Person:
+      allOf:
+        - type: object
+          properties:
+            title:
+              type: string
+            first_name:
+              type: string
+            last_name:
+              type: string
+            middlename:
+              type: string
+            email:
+              type: string
+            gender_id:
+              type: integer
+            phone1:
+              type: string
+            phone2:
+              type: string
+          required:
+            - title
+            - first_name
+            - last_name
+            - email
+          example:
+            - title: 'mr'
+              first_name: 'John'
+              last_name: Smith
+              middlename: Allien
+              email: 'john@test.com'
+              gender_id: 5
+              phone1: 234234234
+              phone2: 234234234
+        - $ref: '#/components/schemas/Media'
+
+    Company:
+      allOf:
+        - type: object
+          properties:
+            name:
+              type: string
+            phone1:
+              type: string
+            phone2:
+              type: string
+            address:
+              $ref: '#/components/schemas/Address'
+          required:
+            - name
+          example:
+            - name: 'A big Compan LT'
+              phone1: 23432432
+              phone2: 234234234
+        - $ref: '#/components/schemas/Media'
+
+    Branch:
+      type: object
+      properties:
+        name:
+          type: string
+        phone1:
+          type: string
+        phone2:
+          type: string
+        company_id:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+      required:
+        - name
+        - company_id
+      example:
+        - name: 'A big Compan LT'
+          phone1: 23432432
+          phone2: 234234234
+          company_id: 5
+
+    Address:
+      type: object
+      properties:
+        addr1:
+          type: string
+        addr2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip_code:
+          type: string
+        country:
+          type: string
+        lat:
+          type: string
+        lng:
+          type: string
+      required:
+        - addr1
+        - city
+        - zip_code
+        - country
+      example:
+        - addr1: 'Apr 4, Floo3'
+          addr2: 'White hall road'
+          city: 'Sialkot'
+          state: Punjab
+          zip_code: 51310
+          country: PK
+          lat: 23.00
+          lng: 32.23
+
+    Notification:
+      type: object
+      properties:
+        hook:
+          type: string
+        slug:
+          type: string
+        lang:
+          type: string
+      required:
+        - hook
+      example:
+        - hook: 'user.created'
+          slug: 'user.created'
+          lang: 'es'
+
+    EmailNotification:
+      allOf:
+        - type: object
+          properties:
+            subject:
+              type: string
+            html_body:
+              type: string
+            text_body:
+              type: string
+          required:
+            - subject
+            - html_body
+          example:
+            - subject: 'Welcome to WF'
+              html_body: '<b>Hello friend</b>, You are now registered'
+              text_body: 'Hello Friend, you are now registerd'
+        - $ref: '#/components/schemas/Notification'
+
+    PushNotification:
+      allOf:
+        - type: object
+          properties:
+            subject:
+              type: string
+            body:
+              type: string
+          required:
+            - subject
+            - body
+          example:
+            - subject: 'Item Deleted'
+              body: 'The desired item is deleted'
+        - $ref: '#/components/schemas/Notification'
+
+    SmsNotification:
+      allOf:
+        - type: object
+          properties:
+            body:
+              type: string
+          required:
+            - body
+          example:
+            - body: 'Please check the package now'
+        - $ref: '#/components/schemas/Notification'
+
+    Product:
+      allOf:
+        - $ref: '#/components/schemas/TransTitle'
+        - type: object
+          properties:
+            short_description:
+              type: string
+            category_id:
+              type: integer
+            type_id:
+              type: integer
+            sku:
+              type: string
+            extra:
+              type: array
+              items:
+                type: object
+          example:
+            - category_id: 'Please check the package now'
+              short_description: anything short
+              type_id: 3
+              sku: 35542340135323
+              extra: [ ]
+          required:
+            - category_id
+            - type_id
+            - sku
+        - $ref: '#/components/schemas/ProductPricing'
+        - $ref: '#/components/schemas/Media'
+
+    ProductPricing:
+      type: object
+      properties:
+        original:
+          type: number
+        current:
+          type: number
+        cost:
+          type: number
+        currency:
+          type: string
+      required:
+        - original
+      example:
+        - original: 20
+          current: 15
+          cost: 12
+          currency: usd
+
+    CartOrder:
+      type: object
+      properties:
+        total_amount:
+          type: number
+        total_items:
+          type: integer
+        user_id:
+          type: integer
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderedItems'
+      example:
+        - total_amount: 200
+          total_items: 15
+          user_id: 3
+          products: [ ]
+
+    OrderedItems:
+      type: object
+      properties:
+        product_id:
+          type: integer
+        qty:
+          type: integer
+
+    Order:
+      allOf:
+        - $ref: '#/components/schemas/CartOrder'
+        - type: object
+          properties:
+            status_id:
+              type: integer
+
+    Page:
+      type: object
+      properties:
+        title:
+          type: string
+        body:
+          type: string
+        slug:
+          type: integer
+        lang:
+          type: string
+        status_id:
+          type: integer
+        extra:
+          type: array
+          items:
+            type: string
+      required:
+        - title
+        - body
+        - slug
+
+    Menu:
+      allOf:
+        - $ref: '#/components/schemas/Term'
+        - type: object
+          properties:
+            Items:
+              type: array
+              items:
+                $ref: '#/components/schemas/MenuItem'
+
+    CartShipment:
+      allOf:
+        - type: object
+          properties:
+            ship_addr:
+              $ref: '#/components/schemas/Address'
+            ship_id:
+              type: integer
+            billing_addr:
+              $ref: '#/components/schemas/Address'
+            billing_id:
+              type: integer
+            customer:
+              $ref: '#/components/schemas/Person'
+            customer_id:
+              type: integer
+            shipment_method:
+              type: integer
+
+    CartReview:
+      allOf:
+        - type: object
+          properties:
+            ship_addr:
+              $ref: '#/components/schemas/Address'
+            billing_addr:
+              $ref: '#/components/schemas/Address'
+            customer:
+              $ref: '#/components/schemas/Person'
+            shipment_method:
+              type: object
+              properties:
+                title:
+                  type: string
+                slug:
+                  type: string
+            products:
+              type: array
+              items:
+                $ref: '#/components/schemas/CartProduct'
+            totals:
+              type: object
+              properties:
+                sub_total:
+                  type: number
+                tax:
+                  type: number
+                discount:
+                  type: number
+                shiping:
+                  type: number
+                total:
+                  type: number
+
+    CartProduct:
+      type: object
+      properties:
+        product_id:
+          type: integer
+        sku:
+          type: string
+        qty:
+          type: integer
+        title:
+          type: string
+        total_price:
+          type: number
+        pricing:
+          type: object
+          properties:
+            original:
+              type: number
+            current:
+              type: number
+            currency:
+              type: number
+        attributes:
+          type: object
+          properties:
+            title:
+              type: string
+            slug:
+              type: string
+            value:
+              type: string
+        media:
+          type: object
+          properties:
+            title:
+              type: string
+            url:
+              type: string
+
+    MenuItem:
+      type: object
+      properties:
+        title:
+          type: string
+        link_type:
+          type: string
+        link_value:
+          type: string
+        parent_id:
+          type: integer
+        class_name:
+          type: string
+        condition:
+          type: string
+        extra:
+          type: array
+          items:
+            type: string
+        menu_id:
+          type: integer
+      required:
+        - title
+        - menu_id
+
+    RecurringProfile:
+      allOf:
+        - $ref: '#/components/schemas/Invoice'
+        - type: object
+          properties:
+            duration_unit:
+              type: integer
+            duration_value:
+              type: integer
+            repetition_times:
+              type: integer
+
+
+    Invoice:
+      allOf:
+        - $ref: '#/components/schemas/QuoteAndInvoice'
+        - type: object
+          properties:
+            tax_amount:
+              type: number
+            method_id:
+              type: integer
+          required:
+            - method_id
+
+    QuoteAndInvoice:
+      type: object
+      properties:
+        model_name:
+          type: string
+        model_id:
+          type: integer
+        identifier:
+          type: string
+        person_id:
+          type: integer
+        currency:
+          type: string
+        base_amount:
+          type: number
+        discount_amount:
+          type: number
+        total_amount:
+          type: number
+        status_id:
+          type: integer
+        is_company:
+          type: boolean
+      required:
+        - base_amount
+        - status_id
+
+    PaymentRecord:
+      type: object
+      properties:
+        currency:
+          type: string
+        amount:
+          type: number
+        type_id:
+          type: integer
+        status_id:
+          type: integer
+        extra:
+          type: object
+        method_id:
+          type: integer
+      required:
+        - amount
+        - type_id
+        - status_id
+        - method_id
+
+    Classified:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        category_id:
+          type: integer
+        show_phone:
+          type: integer
+        show_email:
+          type: integer
+        allow_chat:
+          type: integer
+        customer_id:
+          type: integer
+        status_id:
+          type: integer
+        calL_price:
+          type: integer
+        currency:
+          type: string
+        price:
+          type: number
+        tags:
+          type: array
+          items:
+            type: string
+        attributes:
+          type: array
+          items:
+            type: object
+
+      required:
+        - title
+        - category_id
+        - show_phone
+        - show_email
+        - allow_chat
+        - customer_id
+        - status_id
+        - currency
+        - price
+
+    ClassifiedDefinition:
+      type: object
+      properties:
+        title:
+          type: string
+        status:
+          type: string
+        categories:
+          type: array
+          items:
+            type: integer
+      required:
+        - title
+        - categories
+      example:
+        - title:  Iphone 7
+          categories: [1,6,8]
+
+    ClassifiedDefinitionField:
+      type: object
+      properties:
+        field_id:
+          type: integer
+        options:
+          type: array
+          items:
+            type: integer
+      required:
+        - field_id
+        - options
+      example:
+        - field_id: 6
+          options:  [3,6,3]
+
+    Moderation:
+      type: object
+      properties:
+        type:
+          type: string
+        status_id:
+          type: integer
+        original:
+          type: object
+        logs:
+          type: array
+          items:
+            type: object
+            properties:
+              details:
+                type: object
+              extra:
+                type: object
+
+    FormFields:
+      allOf:
+        - $ref: '#/components/schemas/TransTitle'
+        - type: object
+          properties:
+            help:
+              type: string
+            type_id:
+              type: integer
+            category_id:
+              type: integer
+            is_required:
+              type: boolean
+            is_unique:
+              type: boolean
+            validate_type_id:
+              type: integer
+            validate_extra:
+              type: object
+            options:
+              type: array
+              items:
+                type: object
+                properties:
+                  value:
+                    type: string
+                  title:
+                    type: string
+          example:
+            - help: You can provide color
+              type_id: 1
+              category_id: 4
+              is_required: false
+              is_unique: true
+              validate_type_id: 3
+
+    Media:
+      type: object
+      properties:
+        media:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              file:
+                type: string
+
+    Store:
+      allOf:
+        - $ref: '#/components/schemas/TransTitle'
+        - type: object
+          properties:
+            slug:
+              type: string
+            owner:
+              type: integer
+            status_id:
+              type: integer
+            extra:
+              type: array
+              items:
+                type: string
+          required:
+            - slug
+            - owner
+          example:
+            - slug: dummy-store
+              owner:  5
+              status: 1
+              extra:  {}
+
+        - $ref: '#/components/schemas/Media'
+
+    ShippingMethod:
+      allOf:
+        - $ref: '#/components/schemas/TransTitle'
+        - type: object
+          properties:
+            title:
+              type: string
+            description:
+              type: string
+            slug:
+              type: string
+            rate_by:
+              type: integer
+              description: This will decide weather its rate is fixed, product wise or zone wise
+            currency:
+              type: string
+            status_id:
+              type: string
+          required:
+            - title
+            - slug
+            - rate_by
+            - currency
+          example:
+            - slug: fedex
+              rate_by:  3
+              currency: usd
+              status_id:  7
+
+    ShippingZone:
+      type: object
+      properties:
+        title:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+        methods:
+          type: array
+          items:
+            type: integer
+      required:
+        - title
+        - country
+      example:
+        - title:  Newyork
+          city: newyork
+          state:  newyork
+          zip:  35840
+          country:  us
+          methods:  {1,3,4}
+
+    Service:
+      allOf:
+        - $ref: '#/components/schemas/TransTitle'
+        - type: object
+          properties:
+            category_id:
+              type: integer
+            currency:
+              type: string
+            original:
+              type: number
+            current:
+              type: number
+            price_unit:
+              type: integer
+              description: Fixed, Hourly, Daily, Weekly, Monthly, Per Visit
+            is_recurring:
+              type: boolean
+          required:
+            - category_id
+            - original
+            - price_unit
+          example:
+            - category_id:  5
+              currency: usd
+              original: 34.23
+              current:  30.00
+              price_unit: 5
+              is_recurring: false
+
+    ServiceOrder:
+      type: object
+      properties:
+        currency:
+          type: string
+        base_amount:
+          type: number
+        discount:
+          type: number
+        status_id:
+          type: integer
+        customer:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceOrderItem'
+      required:
+        - currency
+        - base_amount
+        - customer
+        - items
+
+      example:
+        - currency: usd
+          base_amount:  23.34
+          customer: 5
+
+    ServiceOrderItem:
+      type: object
+      properties:
+        service_id:
+          type: string
+        unit_price:
+          type: number
+        qty:
+          type: integer
+        discount:
+          type: number
+      required:
+        - service_id
+        - unit_price
+      example:
+        - service_id: 3
+          unit_price: 50.23
+          qty:  3
+          discount: 23.53
+
+    Quote:
+      allOf:
+        - $ref: '#/components/schemas/QuoteAndInvoice'
+        - type: object
+          properties:
+            items:
+              $ref: '#/components/schemas/QuoteItem'
+
+    QuoteItem:
+      type: object
+      properties:
+        quote_type:
+          type: string
+        quote_id:
+          type: integer
+        unit_price:
+          type: number
+        qty:
+          type: integer
+        discount:
+          type: number
+      required:
+        - quote_type
+        - quote_id
+        - unit_price
+      example:
+        - quote_type: invoice
+          quote_id: 10
+          unit_price: 53.32
+          qty:  5
+          discount: 10.2
+
+    TransTitle:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        lang:
+          type: string
+      required:
+        - title
+      example:
+        - title:  Some Title
+          description:  Write something to describe
+          lang: en
+
+    ResponseMeta:
+      type: object
+      properties:
+        current_page:
+          type: integer
+        from:
+          type: integer
+        last_page:
+          type: integer
+        path:
+          type: string
+        per_page:
+          type: integer
+        to:
+          type: integer
+
+    ResponseLinks:
+      type: object
+      properties:
+        first:
+          type: integer
+        last:
+          type: integer
+        prev:
+          type: integer
+        next:
+          type: integer
+
+    ResponsePaginate:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/ResponseMeta'
+        links:
+          $ref: '#/components/schemas/ResponseLinks'
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+
+# Added by API Auto Mocking Plugin
+servers:
+  - url: '{protocol}://{host}/api/v1'
+    description: White falcon's live Laravel test URL
+    variables:
+      host:
+        default: whf.gotomy.dev
+      protocol:
+        enum:
+          - http
+          - https
+        default: https
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/EvenLogics/white-falcon/1.0.0
+tags:
+  - name: Base
+    description: All Items for Base module will fall under this section
+  - name: User
+    description: Users and authentication related operations are part of this moudle
+  - name: Entity
+    description: Entity module is dealing with people, addresses and companies
+  - name: Notification
+    description: This module is responsible for any kind of communication within or outside the system. E.g Email, SMS, push notifications etc
+  - name: Ecommerce
+    description: The responsibillity of this module is to offer eCommerce capabillity in our ecosystem
+  - name: Product
+    description: This module can be used individually or as part of eCommerce module system.
+  - name: Cms
+    description: This module will be responsbile for providing all functionality related to the pages and general CMS
+  - name: Customer
+    description: This module is responsible for managing everything related to a customer
+  - name: Payment
+    description: A module responsible for managing everything related to the payments
+  - name: Classified
+    description: A module for creating and managing classified ads
+  - name: Moderation
+    description: This module is going to manage all moderations in the system
+  - name: ProductAttributes
+    description: This module is an extension for products to avail form generator's functionality
+  - name: Multistore
+    description: Multistore module is an extension of eCommerce and this will allow to have multivendor or multistore concept introduced
+  - name: Shipping
+    description: All shipping matters of the system should be managed through this module

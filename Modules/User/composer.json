@@ -1,0 +1,37 @@
+{
+    "name": "whf/user-module",
+    "type": "laravel-module",
+    "description": "This module will offer you the power to manage users, roles, permissions and authentications",
+    "require": {
+        "laravel/sanctum": "^2.4",
+        "spatie/laravel-permission": "^3.13",
+        "laravel/socialite": "^5.2"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://karigar.repo.repman.io"
+        }
+    ],
+    "authors": [
+        {
+            "name": "Karigar Web Solutions",
+            "email": "info@karigar.pk"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\User\\Providers\\UserServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\User\\": ""
+        }
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "name": "whf/base-module",
+    "type": "laravel-module",
+    "description": "This module will provide basic structure for modular Laravel app development",
+    "require": {
+        "nwidart/laravel-modules": "^7.1",
+        "kalnoy/nestedset": "^6.0",
+        "league/csv": "^9.6",
+        "joshbrw/laravel-module-installer": "^1.0",
+        "karigarweb/translation": "dev-master"
+    },
+    "repositories": [
+        {"type": "composer", "url": "https://karigar.repo.repman.io"}
+    ],
+    "authors": [
+        {
+            "name": "Karigar Web Solutions",
+            "email": "info@karigar.pk"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Base\\Providers\\BaseServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Base\\": ""
+        }
+    }
+}

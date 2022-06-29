@@ -1,0 +1,25 @@
+{
+    "name": "$VENDOR$/$LOWER_NAME$",
+    "description": "",
+    "authors": [
+        {
+            "name": "Karigar Web Solutions",
+            "email": "info@karigar.pk"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "$MODULE_NAMESPACE$\\$STUDLY_NAME$\\$PROVIDER_NAMESPACE$\\$STUDLY_NAME$ServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "$MODULE_NAMESPACE$\\$STUDLY_NAME$\\": ""
+        }
+    }
+}

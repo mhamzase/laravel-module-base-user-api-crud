@@ -1,0 +1,17 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use Illuminate\Container\Container as Application;
+use Modules\Base\Repositories\BaseRepository;
+
+class $CLASS$ extends BaseRepository
+{
+       /**
+        * @return string
+        */
+       public function model()
+       {
+          return ;
+       }
+}
